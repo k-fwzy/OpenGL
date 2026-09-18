@@ -1,14 +1,7 @@
-CXX := g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -I./libraries/include -I./libraries/include/glad -I./src/headers
-LDFLAGS = -lGL -lglfw
-
-SRC = src/main.cpp
-TARGET = ./bin/main
-LIBRARYFILES = -L./libraries/lib
-
-main: $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) $(LIBRARYFILES) -o $(TARGET) 
-
+main:
+	mkdir -p bin
+	g++ -Wall -Wextra -Wpedantic -std=c++20 -O2 -g -I./headers/shaders -I./headers/utils -I./headers/window -isystem ./libraries/include src/main.cpp src/glad.c -o bin/main $(pkg-config --cflags --libs glfw3) -lGL -ldl -lpthread
+	
 .PHONY: clean
 
 clean: 
