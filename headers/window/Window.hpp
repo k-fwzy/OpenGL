@@ -1,8 +1,10 @@
 #pragma once
 
-#include "glad/glad.h"
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <memory>
+
 #include "utils.hpp"
 
 struct 
@@ -14,10 +16,10 @@ GLFWWindowDeleter {
 
 class Window{
 private:
+    std::string name;
     uint16_t width,
             height;
     std::unique_ptr<GLFWwindow, GLFWWindowDeleter> window;
-    std::string name;
     static constexpr uint16_t min_size = 1,
                             max_size = INT16_MAX;
 
@@ -34,19 +36,19 @@ public:
         const std::string& n, 
         uint16_t w, uint16_t h
     ): name(n), width(w), height(h) {
-        if(!winSizeOk(w, h)) logException(
+        if(!winSizeOk(w, h)) throwException(
             Severity::CRITICAL, Category::WINDOW,
             "Invalid window size: " +
             std::to_string(w) + ", " + std::to_string(h)
         );
-        if(!glfwInit()) logException(
+        if(!glfwInit()) throwException(
             Severity::CRITICAL, Category::WINDOW,
             "glfwInit failed"
         );
 
         glfwWindowHint(GLFW_SAMPLES, 4); //4x antialiasing
-        glfwWindowHint(GLFW_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         #ifdef __APPLE__
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -56,18 +58,12 @@ public:
         GLFWwindow* raw = glfwCreateWindow(
             width, height, name.c_str(), monitor, share 
         ); if(!raw){
-            glfwTerminate(); 
-            logException(
+            glfwTerminate();
+            throwException(
                 Severity::CRITICAL, Category::WINDOW,
                 "glfwCreateWindow failed"
             );
         }
-
-        glfwMakeContextCurrent(window.get());
-        glViewport(0, 0, width, height);
-        clearScreen();
-        glfwSwapBuffers(window.get());
-
         window.reset(raw);
     }
 
@@ -104,7 +100,7 @@ public:
         int w = 0, h = 0;
         glfwGetWindowSize(window.get(), &w, &h);
         return {
-            static_cast<uint16_t>(w), static_cast<uint16_t>(h) 
+            static_cast<uint16_t>(w), static_cast<uint16_t>(h)
         };
     }
 
@@ -112,8 +108,7 @@ public:
     setWindowSize(
         const uint16_t w, const uint16_t h
     ){ 
-        if(!winSizeOk(w, h))[[unlikely]]{
-            logException(
+        if(!winSizeOk(w, h))[[unlikely]]{ throwException(
             Severity::MED, Category::WINDOW,
             "Invalid window size: " +
             std::to_string(w) + ", " + std::to_string(h)

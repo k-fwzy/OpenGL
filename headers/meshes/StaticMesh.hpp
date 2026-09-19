@@ -1,8 +1,9 @@
 #pragma once
 
+#include <glad/glad.h>
 #include <span>
 #include <utility>
-#include "glad/glad.h"
+
 #include "VAO.hpp"
 #include "Vertex.hpp"
 
@@ -18,7 +19,7 @@ private:
     destroy(void) noexcept {
         if(ebo_) glDeleteBuffers(1, &ebo_);
         if(vbo_) glDeleteBuffers(1, &vbo_);
-        if(vao_) glDeleteBuffers(1, &vao_);
+        if(vao_) glDeleteVertexArrays(1, &vao_);
         vao_ = vbo_ = ebo_ = 0;
     }
 
@@ -84,6 +85,5 @@ public:
             GL_TRIANGLES, idx_count_, 
             GL_UNSIGNED_INT, nullptr
         );
-        glBindVertexArray(0);
     }
 };

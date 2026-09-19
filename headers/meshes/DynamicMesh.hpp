@@ -1,11 +1,12 @@
 #pragma once
 
-#include "glad/glad.h"
-#include "Vertex.hpp"
+#include <glad/glad.h>
 #include <span>
 #include <cstddef>
 #include <utility>
 #include <stdexcept>
+
+#include "Vertex.hpp"
 
 class 
 DynamicMesh {
@@ -53,7 +54,7 @@ public:
 
     ~DynamicMesh(void){ destroy(); }
     DynamicMesh(const DynamicMesh&) = delete;
-    DynamicMesh& operator=(const DynamicMesh&) = delete;
+    DynamicMesh& operator=(DynamicMesh&) = delete;
     DynamicMesh(DynamicMesh&& o) noexcept :
         vao_(std::exchange(o.vao_, 0)),
         vbo_(std::exchange(o.vbo_, 0)),
@@ -63,7 +64,7 @@ public:
     {}
 
     DynamicMesh& 
-    operator=(const DynamicMesh&& o) noexcept {
+    operator=(DynamicMesh&& o) noexcept {
         if(this != &o){
             destroy();
             vao_ = std::exchange(o.vao_, 0);

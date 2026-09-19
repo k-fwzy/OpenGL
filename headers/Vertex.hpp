@@ -1,5 +1,6 @@
 #pragma once
-#include "glad/glad.h"
+
+#include <glad/glad.h>
 #include <cstddef>
 #include <vector>
 
@@ -31,8 +32,8 @@ defaultLayout(void){
 
 struct 
 Vertex {
-    float x, y, z,
-        r, g, b;
+    glm::vec3 pos,
+            color;
 };
 
 inline void 

@@ -1,8 +1,22 @@
 main:
 	mkdir -p bin
-	g++ -Wall -Wextra -Wpedantic -std=c++20 -O2 -g -I./headers/shaders -I./headers/utils -I./headers/window -isystem ./libraries/include src/main.cpp src/glad.c -o bin/main $(pkg-config --cflags --libs glfw3) -lGL -ldl -lpthread
-	
+	g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic \
+	src/glad.c \
+	src/main.cpp \
+	-Ivendor/libraries/include \
+	-Iheaders \
+	-Iheaders/meshes \
+	-Iheaders/shaders \
+	-Iheaders/utils \
+	-Iheaders/window \
+	-Iglad/include \
+	-lglfw -lGL -ldl \
+	-o bin/main
+
+run:
+	bin/main
+
 .PHONY: clean
 
 clean: 
-	rm -rf ./bin/*
+	rm -rf bin/*
