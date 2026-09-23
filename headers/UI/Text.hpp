@@ -18,7 +18,7 @@ GLTtextDeleter {
     }
 };
 
-class 
+class
 Text {
 private:
     TextColor color;
@@ -40,4 +40,15 @@ public:
         gltEndDraw();
     }
 
+    void 
+    setPosition(
+        float x, float y, float scale = 1.f
+    ){ this->position = { x, y, scale }; }
+    TextPos getPosition(void){ return position; }
+
+    void 
+    setColor(
+        float r, float g, float b, float a
+    ){ this->color = { r, g, b, a }; }
+    TextColor getColor(void){ return color; }
 };

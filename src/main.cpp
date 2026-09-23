@@ -157,9 +157,11 @@ main(void){
         StaticMesh pyramid(k_pyramid_verts, k_pyramid_idx, defaultLayout());
         Text label(
             "shapes!!", 
-            { 1.f, 1.f, 1.f, 1.f }, 
-            { (float)WIN_WIDTH / 2, (float)WIN_HEIGHT - 100, 5.f }
-        );
+            { 1.f, 1.f, 1.f, 1.f }, {
+                static_cast<float>(win.getWidth()) / 2.f,
+                static_cast<float>(win.getHeight()) - 200.f,
+                5.f
+        });
 
         while(!win.shouldClose()){
             glfwPollEvents();
@@ -218,6 +220,11 @@ main(void){
                 shader.setMat4("uMVP", proj * view * pyr_model);
                 pyramid.draw();
 
+                label.setPosition(
+                    static_cast<float>(win.getWidth()) / 2.f,
+                    static_cast<float>(win.getHeight()) - 200.f,
+                    5.f
+                );
                 label.display2D();
             renderer.endFrame();
             win.swapBuffers();

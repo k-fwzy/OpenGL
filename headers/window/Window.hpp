@@ -96,12 +96,26 @@ public:
     }
 
     glm::vec<2, uint16_t>
-    getWindowSize(void){
+    getSize(void){
         int w = 0, h = 0;
         glfwGetWindowSize(window.get(), &w, &h);
         return {
             static_cast<uint16_t>(w), static_cast<uint16_t>(h)
         };
+    }
+
+    uint16_t
+    getHeight(void){
+        int h = 0;
+        glfwGetWindowSize(window.get(), nullptr, &h);
+        return static_cast<uint16_t>(h);
+    }
+
+    uint16_t
+    getWidth(void){
+        int w = 0;
+        glfwGetWindowSize(window.get(), &w, nullptr);
+        return static_cast<uint16_t>(w);
     }
 
     void
