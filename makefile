@@ -6,6 +6,7 @@ main:
 	-Ivendor/libraries/include \
 	-Iheaders \
 	-Iheaders/meshes \
+	-Iheaders/UI \
 	-Iheaders/shaders \
 	-Iheaders/utils \
 	-Iheaders/window \

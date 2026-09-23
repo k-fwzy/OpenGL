@@ -32,8 +32,8 @@ defaultLayout(void){
 
 struct 
 Vertex {
-    glm::vec3 pos,
-            color;
+    glm::vec3 pos;
+    glm::vec3 color;
 };
 
 inline void 

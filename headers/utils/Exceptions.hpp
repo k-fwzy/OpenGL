@@ -14,7 +14,7 @@ Severity {
 enum class
 Category {
     WINDOW, IO, SHADER, RUNTIME, GLAD, RENDERER,
-    SHADER_COMPILER,
+    SHADER_COMPILER, GLTEXT,
 };
 
 struct 
@@ -40,12 +40,13 @@ std::string
 toString(Category c){
     switch(c){
         case Category::GLAD: return "GLAD";
-        case Category::IO: return "ioException";
+        case Category::IO: return "IOsException";
         case Category::SHADER: return "ShaderException";
         case Category::RUNTIME: return "RuntimeException";
         case Category::WINDOW: return "WindowException";
         case Category::RENDERER: return "RenderException";
         case Category::SHADER_COMPILER: return "ShaderCompilationException";
+        case Category::GLTEXT: return "GLT";
     }
     return "???";
 }
