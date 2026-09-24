@@ -30,10 +30,9 @@ public:
     draw(
         const StaticMesh& mesh,
         Shader& shader,
-        const glm::mat4& model
+        const glm::mat4& mvp
     ){
-        shader.use();
-        shader.setMat4("uMVP", view_proj_ * model);
+        shader.setMat4("uMVP", mvp);
         mesh.draw();
     }
 

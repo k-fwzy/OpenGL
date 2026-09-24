@@ -64,7 +64,9 @@ public:
     {}
 
     DynamicMesh& 
-    operator=(DynamicMesh&& o) noexcept {
+    operator=(
+        DynamicMesh&& o
+    ) noexcept {
         if(this != &o){
             destroy();
             vao_ = std::exchange(o.vao_, 0);

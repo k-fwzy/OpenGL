@@ -69,7 +69,9 @@ public:
     {}
 
     StaticMesh& 
-    operator=(StaticMesh&& o) noexcept {
+    operator=(
+        StaticMesh&& o
+    ) noexcept {
         if(this != &o){
             destroy();
             vao_ = std::exchange(o.vao_, 0);
